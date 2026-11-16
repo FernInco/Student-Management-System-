@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Student Management</h1>
+            <p>Manage your student records in one place.</p>
+        </header>
+
+
+        <section class="stats">
+            <div class="stats-card">
+                <h3>Total Students</h3>
+                <p>0</p>
+            </div>
+
+            <div class="stats-card">
+                <h3>Total Courses</h3>
+                <p>0</p>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <h3>Add New Student</h3>
+            <form id="studentForm">
+                <label for="studentName">Student's Name</label>
+                <input id="studentName" type="text" placeholder="eg: John Doe" required>
+
+                <label for="rollNo">Roll Number</label>
+                <input id="rollNo" placeholder="eg: 26BCH1120" type="text" required>
+
+                <label for="course">Course</label>
+                <input id="course" placeholder="eg: BCom(Hons)" type="text" required>
+
+                <button type="submit">Add Student</button>
+            </form>
+        </section>
+
+        <section class="directory">
+            <h2>Student Directory</h2>
+            <input id="searchInput" type="search" placeholder="Search Students . . .">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Roll Number</th>
+                        <th>Course</th>
+                    </tr>
+                </thead>
+                <tbody id="studentList">
+                    <!--Students will go here -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+    <script src="main.js" type="module"></script>
+</body>
+
+</html>
