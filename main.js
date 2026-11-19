@@ -23,7 +23,7 @@ form.addEventListener('submit',function(event) {
     }
     studentArr.push(student);
 
-    renderStudents(studentArr);
+    filterStudents();
 
     totalStudents.textContent = studentArr.length; 
 
@@ -38,11 +38,7 @@ form.addEventListener('submit',function(event) {
 
 searchBar.addEventListener('input', function() {
 
-    const searchText = searchBar.value.toLowerCase();
-
-    const filteredStudents = studentArr.filter(student => student.name.toLowerCase().includes(searchText) || student.rollNo.toLowerCase().includes(searchText) || student.course.toLowerCase().includes(searchText));
-
-    renderStudents(filteredStudents);
+    filterStudents();
 
 });
 
@@ -53,6 +49,7 @@ function renderStudents(students) {
         const nameCell = document.createElement('td');
         const rollCell = document.createElement('td');
         const courseCell = document.createElement('td');
+    
         nameCell.textContent = student.name;
         rollCell.textContent = student.rollNo;
         courseCell.textContent = student.course;
@@ -64,7 +61,17 @@ function renderStudents(students) {
     }
 }
 
-function filterStudent() {
+function filterStudents() {
 
+const searchText = searchBar.value.toLowerCase();
+
+const filteredStudents = studentArr.filter(student =>
+    student.name.toLowerCase().includes(searchText) ||
+    student.rollNo.toLowerCase().includes(searchText) ||
+    student.course.toLowerCase().includes(searchText)
+);
+    renderStudents(filteredStudents);
 }
+
+
 
