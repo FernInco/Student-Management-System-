@@ -1,19 +1,34 @@
 const form = document.querySelector('#studentForm')
-
 const studentName = document.querySelector('#studentName');
 const rollNo = document.querySelector('#rollNo');
 const course = document.querySelector('#course');
 const studentTable = document.querySelector('#studentList');
-
-const studentArr = []
-
 const totalStudents = document.querySelector('#totalStudents');
 const totalCourses = document.querySelector('#totalCourses');
 const searchBar = document.querySelector('#searchInput');
+const studentArr = []
+const savedStudents = localStorage.getItem('students');
+
+if (savedStudents) {
+    studentArr.push(...JSON.parse(savedStudents));
+}
+filterStudents();
+updateStats();
 
 
-form.addEventListener('submit',function(event) {
+
+
+form.addEventListener('submit', function (event) {
     event.preventDefault();
+
+    const existingStudent = studentArr.find(
+        student => student.rollNo.toLowerCase() === rollNo.value.trim().toLowerCase()
+    );
+
+    if (existingStudent) {
+        alert('This roll number already exists!');
+        return;
+    }
 
     const student = {
         name: studentName.value,
@@ -23,6 +38,7 @@ form.addEventListener('submit',function(event) {
     }
     studentArr.push(student);
 
+    localStorage.setItem('students', JSON.stringify(studentArr));
 
     filterStudents();
 
@@ -33,14 +49,14 @@ form.addEventListener('submit',function(event) {
 
 })
 
-searchBar.addEventListener('input', function() {
+searchBar.addEventListener('input', function () {
 
     filterStudents();
 
 });
 
 function renderStudents(students) {
-    studentTable.innerHTML='';
+    studentTable.innerHTML = '';
     for (const student of students) {
         const row = document.createElement('tr');
         const nameCell = document.createElement('td');
@@ -61,9 +77,11 @@ function renderStudents(students) {
         studentTable.appendChild(row);
 
 
-        deleteCell.addEventListener("click", function() {
+        deleteCell.addEventListener("click", function () {
             const originalIndex = studentArr.indexOf(student);
             studentArr.splice(originalIndex, 1);
+
+            localStorage.setItem('students', JSON.stringify(studentArr));
 
             updateStats();
 
@@ -75,19 +93,19 @@ function renderStudents(students) {
 
 function filterStudents() {
 
-const searchText = searchBar.value.toLowerCase();
+    const searchText = searchBar.value.toLowerCase();
 
-const filteredStudents = studentArr.filter(student =>
-    student.name.toLowerCase().includes(searchText) ||
-    student.rollNo.toLowerCase().includes(searchText) ||
-    student.course.toLowerCase().includes(searchText)
-);
+    const filteredStudents = studentArr.filter(student =>
+        student.name.toLowerCase().includes(searchText) ||
+        student.rollNo.toLowerCase().includes(searchText) ||
+        student.course.toLowerCase().includes(searchText)
+    );
     renderStudents(filteredStudents);
 }
 
 function updateStats() {
 
-    totalStudents.textContent = studentArr.length; 
+    totalStudents.textContent = studentArr.length;
 
     const courses = studentArr.map(student => student.course);
     const uniqueCourses = new Set(courses);
