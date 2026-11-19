@@ -23,13 +23,10 @@ form.addEventListener('submit',function(event) {
     }
     studentArr.push(student);
 
+
     filterStudents();
 
-    totalStudents.textContent = studentArr.length; 
-
-    const courses = studentArr.map(student => student.course);
-    const uniqueCourses = new Set(courses);
-    totalCourses.textContent = uniqueCourses.size;
+    updateStats();
 
     form.reset();
 
@@ -49,15 +46,30 @@ function renderStudents(students) {
         const nameCell = document.createElement('td');
         const rollCell = document.createElement('td');
         const courseCell = document.createElement('td');
-    
+        const actionCell = document.createElement('td');
+        const deleteCell = document.createElement('button');
         nameCell.textContent = student.name;
         rollCell.textContent = student.rollNo;
         courseCell.textContent = student.course;
+        deleteCell.textContent = 'Delete';
 
         row.appendChild(nameCell);
         row.appendChild(rollCell)
         row.appendChild(courseCell);
+        actionCell.appendChild(deleteCell);
+        row.appendChild(actionCell);
         studentTable.appendChild(row);
+
+
+        deleteCell.addEventListener("click", function() {
+            const originalIndex = studentArr.indexOf(student);
+            studentArr.splice(originalIndex, 1);
+
+            updateStats();
+
+            filterStudents();
+        })
+
     }
 }
 
@@ -73,5 +85,14 @@ const filteredStudents = studentArr.filter(student =>
     renderStudents(filteredStudents);
 }
 
+function updateStats() {
+
+    totalStudents.textContent = studentArr.length; 
+
+    const courses = studentArr.map(student => student.course);
+    const uniqueCourses = new Set(courses);
+    totalCourses.textContent = uniqueCourses.size;
+
+}
 
 
