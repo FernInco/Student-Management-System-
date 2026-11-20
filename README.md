@@ -31,13 +31,8 @@ student-management-system/
 ├── index.html
 ├── style.css
 │
-└── js/
-    ├── main.js
-    ├── students.js
-    └── storage.js
+└── main.js
 ```
-
-*Note: The current implementation primarily uses `main.js`. The other JavaScript files are part of the initial project structure.*
 
 ## Getting Started
 
